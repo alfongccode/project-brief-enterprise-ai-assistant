@@ -1,6 +1,9 @@
 
 # Mini-Project — IronStore Enterprise AI Assistant
 
+Build an AI-powered enterprise assistant that enables employees to access internal company knowledge through natural language.
+
+![](./project-intro.png)
 
 
 ## Your task:
