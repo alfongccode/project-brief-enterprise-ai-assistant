@@ -8,7 +8,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
 
-async def new_query(text):
+async def new_query(query):
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
     PINECONE_INDEX_NAME = "enterprise-ai-assistant"
     index = pc.Index(PINECONE_INDEX_NAME)
@@ -24,5 +24,6 @@ async def new_query(text):
     combine = create_stuff_documents_chain(llm, prompt)
     chain = create_retrieval_chain(vectorstore.as_retriever(search_kwargs={"k": 4}), combine)
 
-    response = chain.invoke({"input": text})
-    print(response["answer"])
+    response = chain.invoke({"input": query})
+
+    return response["answer"]

@@ -1,1 +1,1 @@
-export * as queryProviders from "./src/queryProviders";
+export * from "./src/queryProviders.js";

@@ -1,10 +1,12 @@
-function make_query(data) {
-    return fetch('/api/query', {
-        method: "POST",
-        body: JSON.stringify(data),
-    })
+import { post } from './http.js';
+
+function make_query(query, { signal } = {}) {
+    return post('/api/query',
+        { query },
+        { signal }
+    )
 }
 
 export {
     make_query
-}
+};

@@ -2,11 +2,11 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from core.main import new_query
 
-router = APIRouter(prefix='/querys', tags=["querys"])
+router = APIRouter(prefix='/query', tags=["query"])
 
-class CreateProductRequest(BaseModel):
-    text: str
+class CreateQueryRequest(BaseModel):
+    query: str
 
 @router.post('')
-async def api_new_query(payload: CreateProductRequest):
-    return await new_query(text=payload.text)
+async def api_new_query(payload: CreateQueryRequest):
+    return await new_query(query=payload.query)
