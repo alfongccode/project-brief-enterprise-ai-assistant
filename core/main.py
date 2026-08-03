@@ -9,6 +9,8 @@ from langchain_openai import ChatOpenAI
 
 
 async def new_query(query):
+    document_sources = []
+
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
     PINECONE_INDEX_NAME = "enterprise-ai-assistant"
     PINECONE_NAMESPACE = "ironhack-documents"
@@ -31,4 +33,10 @@ async def new_query(query):
 
     response = chain.invoke({"input": query})
 
-    return response["answer"]
+    for doc in response["context"]:
+        document_sources.append(doc.metadata.get('file_path', ''))
+              
+    return {
+        "answer": response["answer"],
+        "sources": document_sources
+    }

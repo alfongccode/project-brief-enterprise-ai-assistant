@@ -6,6 +6,7 @@ function App() {
   const inputRef = useRef(null);
   const textAreaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [sources, setSources] = useState([]);
 
   const hadleSubmitQuery = useCallback(async (ev) => {
     ev.preventDefault();
@@ -13,7 +14,8 @@ function App() {
     setIsLoading(true);
     try {
       const response = await make_query(inputRef.current.value, { signal: controller?.signal });
-      textAreaRef.current.value = response;
+      textAreaRef.current.value = response.answer;
+      setSources([...new Set(response.sources)]);
     } finally {
       setIsLoading(false);
     }
@@ -60,10 +62,20 @@ function App() {
             id="query-response"
             ref={textAreaRef}
             className="query-response"
-            rows="16"
+            rows="10"
             readOnly
             placeholder="The answer will appear here"
           />
+          {sources.length > 0 && (
+            <div className="sources">
+              <span className="query-label">Sources</span>
+              <ul className="sources-list">
+                {sources.map((source) => (
+                  <li key={source}>{source}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
