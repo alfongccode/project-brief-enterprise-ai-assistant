@@ -11,9 +11,14 @@ from langchain_openai import ChatOpenAI
 async def new_query(query):
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
     PINECONE_INDEX_NAME = "enterprise-ai-assistant"
+    PINECONE_NAMESPACE = "ironhack-documents"
     index = pc.Index(PINECONE_INDEX_NAME)
     embeddings = OpenAIEmbeddings(api_key=os.getenv("OPENAI_API_KEY"))
-    vectorstore = PineconeVectorStore(index=index, embedding=embeddings)
+    vectorstore = PineconeVectorStore(
+        index=index,
+        embedding=embeddings,
+        namespace=PINECONE_NAMESPACE
+    )
 
     llm = ChatOpenAI(model="gpt-4o-mini", api_key=os.getenv("OPENAI_API_KEY"))
 
